@@ -17,8 +17,8 @@ namespace Application.Database
 
         public DatabaseContext(IDatabaseSettings settings)
         {
-            settings.ReadFromEnvironment();
-            client = new MongoClient(settings.ConnectionString);
+            var mongoSettings = settings.GetSettings();
+            client = new MongoClient(mongoSettings);
             database = client.GetDatabase(settings.DatabaseName);
         }
 

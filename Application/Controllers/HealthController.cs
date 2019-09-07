@@ -1,4 +1,6 @@
 using Application.Database;
+using Application.Models;
+using Application.Repositories;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Application.Controllers
@@ -7,10 +9,12 @@ namespace Application.Controllers
     public class HealthController : Controller
     {
         private readonly IDatabaseContext dbContext;
+        private readonly IModelRepository modelRepository;
 
-        public HealthController(IDatabaseContext dbContext)
+        public HealthController(IDatabaseContext dbContext, IModelRepository modelRepository)
         {
             this.dbContext = dbContext;
+            this.modelRepository = modelRepository;
         }
 
         // GET api/health/ping
@@ -18,15 +22,11 @@ namespace Application.Controllers
         [HttpGet("ping")]
         public ActionResult Ping()
         {
-            if (dbContext.IsConnectionOpen())
-            {
-                return Ok(new { Message = "pong!" });
-            }
-            else
-            {
-                return BadRequest("Cannot connect to db");
-            }
+            var model = new Model();
 
+            var modelOut = modelRepository.Create(model);
+
+            return Ok(modelOut);
         }
     }
 }

@@ -17,6 +17,8 @@ namespace Application
             Environment.SetEnvironmentVariable("CollectionName", "Models");
             Environment.SetEnvironmentVariable("ConnectionString", "mongodb://localhost:27017");
             Environment.SetEnvironmentVariable("DatabaseName", "ApplicationDb");
+            Environment.SetEnvironmentVariable("MONGO_INITDB_ROOT_USERNAME", "application");
+            Environment.SetEnvironmentVariable("MONGO_INITDB_ROOT_PASSWORD", "password");
 
             _startup = new Startup(configuration);
         }
